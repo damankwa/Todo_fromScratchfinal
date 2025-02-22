@@ -6,6 +6,7 @@ import { getSuffixFromStack } from '../Utils';
 export class DataStack extends Stack {
 
     public readonly spacesTable: ITable;
+    public readonly todosTable: ITable;
 
     constructor(scope: Construct, id:string, props?: StackProps){
         super(scope,id,props);
@@ -18,6 +19,14 @@ export class DataStack extends Stack {
                 type: AttributeType.STRING
             },
             tableName: `SpaceTable-${suffix}`
+        });
+
+        this.todosTable = new Table(this, 'TodosTable', {
+            partitionKey : {
+                name: 'id',
+                type: AttributeType.STRING
+            },
+            tableName: `TodoTable-${suffix}`
         })
     }
 }

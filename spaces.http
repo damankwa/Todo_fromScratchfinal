@@ -1,4 +1,6 @@
 
 
-GET https://jlw92hfdyb.execute-api.ca-central-1.amazonaws.com/prod/spaces
+GET https://7czykh59lg.execute-api.ca-central-1.amazonaws.com/prod/spaces
 ###
+
+GET https://tz8vrgde90.execute-api.ca-central-1.amazonaws.com/prod/
