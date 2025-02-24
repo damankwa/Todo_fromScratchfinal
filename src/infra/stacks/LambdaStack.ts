@@ -5,6 +5,7 @@ import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
 import { join } from 'path'
 import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 import { ITable } from 'aws-cdk-lib/aws-dynamodb';
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 interface LambdaStackProps extends StackProps{
     spacesTable: ITable;
@@ -28,6 +29,15 @@ export class LambdaStack extends Stack {
                 TABLE_NAME: props.spacesTable.tableName
             }
         });
+
+        //ourspacesLambda needs the right to write data to our table
+        spacesLambda.addToRolePolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [props.spacesTable.tableArn],
+            actions: [
+                'dynamodb:PutItem'
+            ]
+        }))
 
         const todoLambda = new NodejsFunction(this, 'TodoLambda', {
             runtime: Runtime.NODEJS_18_X,
