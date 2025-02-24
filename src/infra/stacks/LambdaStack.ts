@@ -13,17 +13,17 @@ interface LambdaStackProps extends StackProps{
 
 export class LambdaStack extends Stack {
 
-    public readonly helloLambdaIntegration: LambdaIntegration;
+    public readonly spacesLambdaIntegration: LambdaIntegration;
     public readonly todoLambdaIntegration: LambdaIntegration;
 
     constructor(scope: Construct, id:string, props: LambdaStackProps){
         super(scope,id,props);
 
         //navigate to hello.main by ../../
-        const helloLambda = new NodejsFunction(this, 'HelloLambda', {
+        const spacesLambda = new NodejsFunction(this, 'SpacesLambda', {
             runtime: Runtime.NODEJS_18_X,
             handler: 'handler',
-            entry: (join(__dirname, '..', '..', 'services', 'hello.ts')),
+            entry: (join(__dirname, '..', '..', 'services', 'spaces', 'handler.ts')),
             environment: {
                 TABLE_NAME: props.spacesTable.tableName
             }
@@ -38,7 +38,7 @@ export class LambdaStack extends Stack {
             }
         });
 
-        this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
+        this.spacesLambdaIntegration = new LambdaIntegration(spacesLambda);
         this.todoLambdaIntegration = new LambdaIntegration(todoLambda);
     }
 }
